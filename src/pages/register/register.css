@@ -1,0 +1,124 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap');
+
+
+.register {
+  width: 100vw;
+  height: 100vh;
+  background-color: #f0f2f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.registerVideo{
+
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.registerWrapper {
+  position: absolute;
+  width: 70%;
+  height: 85%;
+  display: flex;
+}
+.registerLeft{
+  flex: 1.75;
+}
+
+.registerRight {
+  flex: 1.25;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  height: 100%;
+}
+
+.registerRightCompanyName{
+  text-align: center;
+  font-family: 'Cedarville Cursive', cursive;
+  color: #FEF5ED;
+  font-size: 40px;
+  margin-bottom: 20px;
+
+}
+
+.registerBox{
+    width: 100%;
+    height: 400px;
+    padding: 20px;
+    background-color: #1e223b94;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0px 0px 40px #1e223b;
+}
+
+.registerInput{
+  padding: 0;
+    width: 80%;
+    height: 40px;
+    border: 2px solid rgb(255, 255, 255);
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    font-size: 18px;
+    font-weight: 500;
+    color:#F8F0DF;
+    margin-bottom: 20px;
+    background-color: transparent;
+}
+
+.registerInput:focus{
+    outline: none;
+}
+
+.registerButton{
+  width: 50%;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    background-color: #0e468f;
+    color: #F8F0DF;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.registerExtraButton{
+  width: 75%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+
+.registerRegister{
+  flex: 1;
+    text-align: center;
+    color: #F8F0DF;
+    cursor: pointer;
+}
+
+
+.reloading{
+  z-index: 99;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-left: 20px;
+  width: 100vw;
+  height: 100vh;
+  font-size: 32px;
+  color: white;
+  font-weight: 800;
+  background-color: #000000e7;
+  display: flex;
+  align-items: center;
+}

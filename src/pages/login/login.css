@@ -1,0 +1,124 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap');
+
+
+.login {
+  width: 100vw;
+  height: 100vh;
+  background-color: #f0f2f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loginVideo{
+
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.loginWrapper {
+  position: absolute;
+  width: 70%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loginLeft{
+  flex: 1.75;
+}
+
+.loginRight {
+  flex: 1.25;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  height: 80%;
+}
+
+.loginRightCompanyName{
+  text-align: center;
+  font-family: 'Cedarville Cursive', cursive;
+  color: #FEF5ED;
+  font-size: 40px;
+  margin-bottom: 20px;
+
+}
+
+.loginBox{
+    width: 100%;
+    height: 400px;
+    padding: 20px;
+    background-color: #1e223b94;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 40px #1e223b;
+}
+
+.loginInput{
+  padding: 0;
+    width: 80%;
+    height: 40px;
+    border: 2px solid rgb(255, 255, 255);
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    font-size: 18px;
+    font-weight: 500;
+    color: #F8F0DF;
+    margin-bottom: 20px;
+    background-color: transparent;
+}
+
+.loginInput:focus{
+    outline: none;
+}
+
+.loginButton{
+  width: 50%;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    background-color: #0e468f;
+    color: #F8F0DF;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 30px;
+}
+
+.loginButton:focus{
+  outline: none;
+}
+
+.loginButton:disabled{
+  cursor:not-allowed;
+}
+
+.loginExtraButton{
+  width: 75%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.loginForgot{
+  flex: 1;
+    color: #F8F0DF;
+    text-align: center;
+    cursor: pointer;
+}
+
+.loginRegister{
+  flex: 1;
+    text-align: center;
+    color: #F8F0DF;
+    cursor: pointer;
+}
