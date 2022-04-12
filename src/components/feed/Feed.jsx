@@ -10,7 +10,18 @@ const Feed = ({ username }) => {
   
   const [posts, setPosts] = useState([]);
   const { user }= useContext(AuthContext);
-  //fetching data from data base
+
+  //functions
+  //sorting link using date
+  const sortByDate = arr => {
+    const sorter = (a, b) => {
+       return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    }
+    arr.sort(sorter);
+    arr = arr.reverse()
+ };
+
+  //fetching data from data-base
   useEffect(() => {
     const fetchPosts = async()=> {
         let res = []
@@ -20,7 +31,11 @@ const Feed = ({ username }) => {
           res = await axios.get(`/posts/timeline/${user._id}`);
         }
         
-        setPosts(res.data)
+       // getting all the post
+       let allPost = res.data
+       //calling sortByDate function
+       sortByDate(allPost)
+       setPosts(allPost)
     }
     fetchPosts();
   }, [username , user]);

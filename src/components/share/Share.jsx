@@ -7,7 +7,7 @@ import {
   Send,
   ContactSupportOutlined,
 } from "@material-ui/icons";
-import { useContext, useRef } from "react";
+import { useContext} from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useState } from "react";
 
@@ -26,40 +26,49 @@ const Share = () => {
 
   //getting input from the form
   const [file, setFile] = useState(null);
-  const desc = useRef();
+  const [description, setDescription] = useState("")
 
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const hello = 'modified'
+
   async function handleSubmit(e){
     e.preventDefault();
     const newPost = {
       userId : user._id,
-      desc : desc.current.value,
+      desc : description,
       img : ''
     }
+
+
     if(file){
 
       const fileName = Date.now() + file.name;
       const data = new FormData()
      
+      //file upload location with file name
       const sotrageRef = ref(storage, `img/${fileName}`);
       const uploadTask = uploadBytesResumable(sotrageRef, file);
       
       uploadTask.on(
+        //param-1
         "state_changed",
+        //param-2
         (snapshot) => {
           const prog = Math.round(
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
           setProgressBar(prog);
         },
+        //param-3
         (error) => console.log(error),
+        //param-4
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
             newPost.img = downloadURL;
             try {
               await axios.post('/posts/post', newPost)
+              window.location.reload() //reloading the page
+
             }catch (error) {
               console.log("/posts", error)}
             console.log("newPost: ", newPost);
@@ -68,6 +77,22 @@ const Share = () => {
       );
     setProgressBar(0); 
     }
+
+    //only description updated
+    else if(description){
+
+      try {
+        await axios.post('/posts/post', newPost)
+        window.location.reload() //reloading the page
+      } catch (error) {
+        console.log("/post", error);
+      }
+
+      console.log("newPost: ", newPost);
+    }
+    setDescription(null);
+    setFile(null)
+
   }
 
   return (
@@ -78,7 +103,7 @@ const Share = () => {
             className="shareProfileImg"
             src={
               user.profilePicture
-                ? PF + user.profilePicture
+                ? user.profilePicture
                 : `${PF}/person/noAvatar.png`
             }
             alt=""
@@ -86,7 +111,8 @@ const Share = () => {
           <input
             placeholder={`What's in your mind ${user.username}`}
             className="shareInput"
-            ref={desc}
+            onChange={(e)=>setDescription(e.target.value)}
+            value = {description}
           />
         </div>
         <hr className="shareHr" />
