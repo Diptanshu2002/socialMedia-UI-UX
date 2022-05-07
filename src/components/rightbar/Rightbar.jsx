@@ -2,16 +2,23 @@ import "./rightbar.css";
 
 import { Users } from "../../dummyData";
 import Online from "../online/Online";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "../../hooks/axios";
+import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
+import {Add, Remove} from "@material-ui/icons";
 
 const Rightbar = ({ profile }) => {
   //followings
   const [getFollowings, setGetFollowings] = useState(null)
-
+  const { user }  = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const [followed, setFollowed] = useState(false);
+  
 
+  useEffect(()=>{
+    setFollowed(user.followings.includes(profile?.id))
+  },[user, user.id])
   //-----------------------------------------
   if(profile){
     useEffect(()=>{
@@ -29,7 +36,18 @@ const Rightbar = ({ profile }) => {
   
     console.log('friends : ', getFollowings)
   }
+  //-----------------------------------------
+  async function handleFollowClick(){
+    // if(followed){
+    //     try{
+    //       axios.put(`/users/${profile._id}/follow`)
+    //       console.log("profile name :::",profile._id)
+    //     }catch(error){
   
+    //   }
+    //}
+    
+  }
   //-----------------------------------------
   function HomeRightBar() {
     return (
@@ -59,6 +77,12 @@ const Rightbar = ({ profile }) => {
     //--------------------------------------------------------------
     return (
       <>
+        {profile.username !== user.username && (
+        <button className="rightbarFollowButton" onClick={handleFollowClick}>
+          {followed ? "Unfollow" : "Follow"}
+          {followed ? <Remove/> : <Add/>}
+        </button>
+        )}
         <h4 className="rightbarTitle">User information</h4>
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">

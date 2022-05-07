@@ -6,10 +6,11 @@ import axios from "../../hooks/axios";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
-const Feed = ({ username }) => {
+const Feed = ({ username, home }) => {
   
   const [posts, setPosts] = useState([]);
   const { user }= useContext(AuthContext);
+  console.log("current user in authcontext" , user,"\n profile page user:",username);
 
   //functions
   //sorting link using date
@@ -52,7 +53,7 @@ const Feed = ({ username }) => {
   return (
     <div className="feed">
       <div className="feedWrapper">
-        <Share />
+        {(username === user.username) || home  ? <Share /> : console.log("different user page")}
         {posts && posts.map((post)=>(
                     <Post key={post._id} post = {post} />
                 ))}

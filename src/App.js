@@ -2,6 +2,7 @@ import Home from "./pages/home/Home";
 import Profile from "./pages/profilePage/Profile";
 import Login from './pages/login/Login'
 import Register from './pages/register/Register'
+import Messenger from "./pages/messenger/Messenger";
 
 import { BrowserRouter , Switch , Route , Link, Redirect } from 'react-router-dom'
 import { useContext } from "react";
@@ -35,6 +36,11 @@ function App() {
           {/* REGISTER */}
           <Route  path='/signup'>
             {user ? <Redirect to='/' /> : <Register/>}
+          </Route>
+
+
+          <Route  path='/messenger'>
+            {user ? <Messenger/> : <Redirect to='/login' />}
           </Route>
         </Switch>
       </BrowserRouter>
