@@ -12,6 +12,7 @@ import { AuthContext } from "../../context/AuthContext";
 export default function Post({ post }) {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
+  const [open, setOpen] = useState(false)
 
   // post belongs to this user
   const [userPost, setUserPost] = useState({});
@@ -24,8 +25,8 @@ export default function Post({ post }) {
   //fetching a user from data base with the help of post
   useEffect(() => {
     async function fetchUser() {
-      const user = await axios(`/users?userId=${post.userId}`);
-      setUserPost(user.data);
+      const userFriend = await axios(`/users?userId=${post.userId}`);
+      setUserPost(userFriend.data);
     }
     fetchUser();
   }, [post]);
@@ -54,6 +55,29 @@ export default function Post({ post }) {
     setIsLiked(!isLiked);
   }
 
+  function handleOptions(){
+    if(!open){
+      setOpen(true);
+    }else{
+      setOpen(false)
+    }
+  }
+
+  async function deleteHandler(){
+    const payload = {
+      userId : user._id
+    }
+    try {
+      console.log(post)
+      console.log(user._id)
+      const res = await axios.delete(`/posts/${post._id}`, {data:payload})
+      console.log(res);
+      window.location.reload()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 
 
   return (
@@ -79,13 +103,26 @@ export default function Post({ post }) {
           </div>
 
           <div className="postTopRight">
-            <MoreVert />
+            <MoreVert onClick={handleOptions} />
           </div>
+          {open &&
+            (<div className="menu">
+              <ul>
+                <li onClick={deleteHandler} >Delete</li>
+                <li>Update</li>
+              </ul>
+            </div>)
+          }
         </div>
 
         <div className="postCenter">
           <span className="postText">{post?.desc}</span>
-          <img className="postImg" src={`${post?.img}`} alt="" />
+          {post?.type === "image" && (<img className="postImg" src={`${post?.img}`} alt="" />)}
+          {post?.type === "video" && 
+          (<video className="postImg" controls autoPlay>
+              <source  src={`${post?.img}`} />
+          </video>)}
+          
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">

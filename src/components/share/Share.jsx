@@ -25,7 +25,8 @@ const Share = () => {
   const { user } = useContext(AuthContext);
 
   //getting input from the form
-  const [file, setFile] = useState(null);
+  const [img, setImg] = useState(null);
+  const [video, setVideo] = useState(null);
   const [description, setDescription] = useState("")
 
 
@@ -33,21 +34,66 @@ const Share = () => {
 
   async function handleSubmit(e){
     e.preventDefault();
-    const newPost = {
-      userId : user._id,
-      desc : description,
-      img : ''
-    }
+  
+    if(img){
 
+      const newPost = {
+        userId : user._id,
+        desc : description,
+        img : '',
+        type : "image"
+      }
 
-    if(file){
-
-      const fileName = Date.now() + file.name;
-      const data = new FormData()
+      const fileName = Date.now() + img.name;
+      // const data = new FormData()
      
       //file upload location with file name
       const sotrageRef = ref(storage, `img/${fileName}`);
-      const uploadTask = uploadBytesResumable(sotrageRef, file);
+      const uploadTask = uploadBytesResumable(sotrageRef, img);
+      
+      uploadTask.on(
+        //param-1
+        "state_changed",
+        //param-2
+        (snapshot) => {
+          const prog = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          setProgressBar(prog);
+        },
+        //param-3
+        (error) => console.log(error),
+        //param-4
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            newPost.img = downloadURL;
+            try {
+              await axios.post('/posts/post', newPost)
+              window.location.reload() //reloading the page
+
+            }catch (error) {
+              console.log("/posts", error)}
+            console.log("newPost: ", newPost);
+          });
+        }
+      );
+    setProgressBar(0); 
+    }
+    //video file uploading----------------------------------------------------------------------
+    else if(video){
+      const newPost = {
+        userId : user._id,
+        desc : description,
+        img : '',
+        type : "video"
+      }
+
+      const fileName = Date.now() + video.name;
+      // const data = new FormData()
+     
+      //file upload location with file name
+      const sotrageRef = ref(storage, `video/${fileName}`);
+      const uploadTask = uploadBytesResumable(sotrageRef, video);
       
       uploadTask.on(
         //param-1
@@ -81,6 +127,13 @@ const Share = () => {
     //only description updated
     else if(description){
 
+      const newPost = {
+        userId : user._id,
+        desc : description,
+        img : '',
+        type : '',
+      }
+
       try {
         await axios.post('/posts/post', newPost)
         window.location.reload() //reloading the page
@@ -91,7 +144,8 @@ const Share = () => {
       console.log("newPost: ", newPost);
     }
     setDescription(null);
-    setFile(null)
+    setImg(null)
+    setVideo(null)
 
   }
 
@@ -121,22 +175,33 @@ const Share = () => {
             
             <label htmlFor="file" className="shareOption">
               <PermMedia style={{ color: "#219F94" }} className="shareIcon" />
-              <span className="shareOptionText">Photo or Video</span>
+              <span className="shareOptionText">Photo</span>
               <input
                 name="file"
                 type="file"
                 id="file"
                 accept=".png, .jpeg, .jpg"
                 style={{ display: "none" }}
-                onChange={(e) => setFile(e.target.files[0])}
+                onChange={(e) => setImg(e.target.files[0])}
               />
             </label>
 
             <div className="shareOption">
-              <Label style={{ color: "#548CFF" }} className="shareIcon" />
-              <span className="shareOptionText">Tag</span>
+              <label htmlFor="video" className="shareOption" >
+                <Label style={{ color: "#548CFF" }} className="shareIcon" />
+                <span className="shareOptionText">Video</span>
+                <input
+                  name="video" 
+                  type="file"
+                  id="video"
+                  accept="video/mp4" 
+                  style={{display:"none"}}
+                  onChange={(e)=>setVideo(e.target.files[0])}
+                    />
+              </label>
+              
             </div>
-            <div className="shareOption">
+            {/* <div className="shareOption">
               <Room style={{ color: "#FF1700" }} className="shareIcon" />
               <span className="shareOptionText">Location</span>
             </div>
@@ -146,7 +211,7 @@ const Share = () => {
                 className="shareIcon"
               />
               <span className="shareOptionText">Emotion</span>
-            </div>
+            </div> */}
           </div>
           <button className="shareSendButton">
             <Send className="shareSendIcon" type='submit' style={{ color: "#113CFC" }} />

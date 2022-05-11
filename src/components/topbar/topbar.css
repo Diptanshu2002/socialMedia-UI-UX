@@ -97,3 +97,33 @@
     object-fit: cover;  /*cover the img inside the img*/
     cursor: pointer;
 }
+
+.search{
+    position: absolute;
+    top: 50px;
+    z-index: 999999;
+    width: 100%;
+    background-color: rgba(160, 255, 150, 0.642);
+
+}
+
+.search ul{
+    margin: 20px auto;
+    width: 80%;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+}
+
+.search ul li{
+    margin: 10px 0;
+    padding: 10px 0 10px 20px;
+    border-bottom: 1px solid black;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.search ul li:last-child{
+    border: none;
+}

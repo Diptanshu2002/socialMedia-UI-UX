@@ -1,15 +1,29 @@
 import "./topbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
 //TOP-BAR FUNCTION
 export default function Topbar() {
+
+  const [open, setOpen] = useState(false);
+
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   //gives the logged in user details
   const { user } = useContext(AuthContext);
 
+  function handleOpen(){
+    if(!open){
+      setOpen(true)
+    }else{
+      setOpen(false)
+    }
+  }
+
+  useState(()=>{
+    
+  },[])
   //HTML CODE BELOW
   return (
     <div className="topbarContainer">
@@ -24,6 +38,7 @@ export default function Topbar() {
           <input
             placeholder="Search for friend, post or video"
             className="searchInput"
+            onClick={handleOpen}
           />
         </div>
       </div>
@@ -61,6 +76,14 @@ export default function Topbar() {
           />
         </Link>
       </div>
+      {open && 
+        (<div className="search">
+            <ul>
+              <li>Ribhu</li>
+              <li>Babai</li>
+              <li>Reek</li>
+            </ul>
+        </div>)}
     </div>
   );
 }
