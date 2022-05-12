@@ -7,6 +7,8 @@ import axios from "../../hooks/axios";
 import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import {Add, Remove} from "@material-ui/icons";
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+
 
 const Rightbar = ({ profile }) => {
   //followings
@@ -83,6 +85,17 @@ const Rightbar = ({ profile }) => {
           {followed ? <Remove/> : <Add/>}
         </button>
         )}
+        
+
+        {profile.username === user.username && (
+        <Link to='/update'>
+            <button className="rightbarFollowButton">
+              Update Profile
+              <EditOutlinedIcon/>
+            </button>
+        </Link>
+        )}
+
         <h4 className="rightbarTitle">User information</h4>
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">

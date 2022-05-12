@@ -3,7 +3,7 @@ import Profile from "./pages/profilePage/Profile";
 import Login from './pages/login/Login'
 import Register from './pages/register/Register'
 import Messenger from "./pages/messenger/Messenger";
-import Search from "./pages/search/Search";
+import Update from "./pages/updateDetails/Update";
 
 
 import { BrowserRouter , Switch , Route , Link, Redirect } from 'react-router-dom'
@@ -45,11 +45,11 @@ function App() {
             {user ? <Messenger/> : <Redirect to='/login' />}
           </Route>
 
-          {/*
-          <Route  path='/search'>
-            {user ? <Search/> : <Redirect to='/login' />}
+          
+          <Route  path='/update'>
+            {user ? <Update/> : <Redirect to='/login' />}
           </Route>
-          */}
+         
 
         </Switch>
       </BrowserRouter>
